@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+// import for firebase auth
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+// import to use firebase db in project
+import { db } from "../firebase.config";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
+import { FirebaseError } from "firebase/app";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,13 +27,32 @@ const SignUp = () => {
       [e.target.id]: e.target.value,
     }));
   };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <div className="pageContainer">
         <header>
           <p className="pageHeader">Welcome back</p>
         </header>
-        <form>
+        <form onSubmit={onSubmit}>
           <input
             type="text"
             placeholder="Name"
