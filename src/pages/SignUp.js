@@ -6,11 +6,12 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+// import for firebase cloud firestore
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 // import to use firebase db in project
 import { db } from "../firebase.config";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
-import { FirebaseError } from "firebase/app";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +28,7 @@ const SignUp = () => {
       [e.target.id]: e.target.value,
     }));
   };
+  // on form submit  authenticate/ create user with password then add user to the DB
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,9 +40,19 @@ const SignUp = () => {
         password
       );
       const user = userCredential.user;
+
       updateProfile(auth.currentUser, {
         displayName: name,
       });
+      // copy in formData using spread and then del the password from the copy
+      const formDataCopy = { ...formData };
+      // dont want the password to be stored in the db firebase authentication handles this
+      delete formDataCopy.password;
+      // adding the time stamp to the object
+      formDataCopy.timestamp = serverTimestamp();
+
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+
       navigate("/");
     } catch (error) {
       console.log(error);
