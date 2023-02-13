@@ -7,7 +7,7 @@ const Explore = () => {
   return (
     <div className="explore">
       <header>
-        <p className="pageHeader">Explor</p>
+        <p className="pageHeader">Explore</p>
       </header>
       <main>
         {/* slider */}
@@ -22,7 +22,7 @@ const Explore = () => {
           />
           <p className="exploreCategoryName">Places to rent</p>
         </Link>
-        <Link to="/category/rent">
+        <Link to="/category/sale">
           <img
             src={sellCategoryImage}
             alt="sell"
