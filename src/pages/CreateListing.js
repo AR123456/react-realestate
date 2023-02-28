@@ -69,120 +69,128 @@ function CreateListing() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMounted]);
+  // geolocating with google
+  // https://www.udemy.com/course/react-front-to-back-2022/learn/lecture/29769176#questions/16627934
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-  // const onSubmit = async (e) => {
-  //   e.preventDefault();
+    setLoading(true);
 
-  //   setLoading(true);
+    if (discountedPrice >= regularPrice) {
+      setLoading(false);
+      toast.error("Discounted price needs to be less than regular price");
+      return;
+    }
 
-  //   if (discountedPrice >= regularPrice) {
-  //     setLoading(false);
-  //     toast.error("Discounted price needs to be less than regular price");
-  //     return;
-  //   }
+    if (images.length > 6) {
+      setLoading(false);
+      toast.error("Max 6 images");
+      return;
+    }
+    // the object that holds lag lng that is submitted to google firebase
+    let geolocation = {};
+    let location;
+    // option to use geolocation,if not enabled the user should enter in the form
+    if (geolocationEnabled) {
+      // making request to google async await the url plus address and my key
+      const response = await fetch(
+        // put this into an enviroment var
+        ///https://www.udemy.com/course/react-front-to-back-2022/learn/lecture/29769176#questions
+        // put it into a .env file in the root
+        // in the .env the name needs to start with REACT_APP when doing this in a react app
+        // here preface with process.env
+        // add .env to the git ignore file
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
+      );
 
-  //   if (images.length > 6) {
-  //     setLoading(false);
-  //     toast.error("Max 6 images");
-  //     return;
-  //   }
+      const data = await response.json();
+      //  google geometry object  the question mark is needed or will generate an error
+      geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
+      geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
 
-  //   let geolocation = {};
-  //   let location;
+      location =
+        data.status === "ZERO_RESULTS"
+          ? undefined
+          : data.results[0]?.formatted_address;
 
-  //   if (geolocationEnabled) {
-  //     const response = await fetch(
-  //       `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
-  //     );
+      if (location === undefined || location.includes("undefined")) {
+        setLoading(false);
+        toast.error("Please enter a correct address");
+        return;
+      }
+    } else {
+      geolocation.lat = latitude;
+      geolocation.lng = longitude;
+    }
 
-  //     const data = await response.json();
+    // Store image in firebase
+    const storeImage = async (image) => {
+      return new Promise((resolve, reject) => {
+        const storage = getStorage();
+        const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
 
-  //     geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
-  //     geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
+        const storageRef = ref(storage, "images/" + fileName);
 
-  //     location =
-  //       data.status === "ZERO_RESULTS"
-  //         ? undefined
-  //         : data.results[0]?.formatted_address;
+        const uploadTask = uploadBytesResumable(storageRef, image);
 
-  //     if (location === undefined || location.includes("undefined")) {
-  //       setLoading(false);
-  //       toast.error("Please enter a correct address");
-  //       return;
-  //     }
-  //   } else {
-  //     geolocation.lat = latitude;
-  //     geolocation.lng = longitude;
-  //   }
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+              default:
+                break;
+            }
+          },
+          (error) => {
+            reject(error);
+          },
+          () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            });
+          }
+        );
+      });
+    };
 
-  //   // Store image in firebase
-  //   const storeImage = async (image) => {
-  //     return new Promise((resolve, reject) => {
-  //       const storage = getStorage();
-  //       const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+    const imageUrls = await Promise.all(
+      // const imgUrls = await Promise.all(
+      [...images].map((image) => storeImage(image))
+    ).catch(() => {
+      setLoading(false);
+      toast.error("Images not uploaded");
+      return;
+    });
 
-  //       const storageRef = ref(storage, "images/" + fileName);
+    const formDataCopy = {
+      ...formData,
+      // imgUrls,
+      imageUrls,
+      geolocation,
+      timestamp: serverTimestamp(),
+    };
 
-  //       const uploadTask = uploadBytesResumable(storageRef, image);
+    formDataCopy.location = address;
+    delete formDataCopy.images;
+    delete formDataCopy.address;
+    !formDataCopy.offer && delete formDataCopy.discountedPrice;
 
-  //       uploadTask.on(
-  //         "state_changed",
-  //         (snapshot) => {
-  //           const progress =
-  //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //           console.log("Upload is " + progress + "% done");
-  //           switch (snapshot.state) {
-  //             case "paused":
-  //               console.log("Upload is paused");
-  //               break;
-  //             case "running":
-  //               console.log("Upload is running");
-  //               break;
-  //             default:
-  //               break;
-  //           }
-  //         },
-  //         (error) => {
-  //           reject(error);
-  //         },
-  //         () => {
-  //           // Handle successful uploads on complete
-  //           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-  //           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-  //             resolve(downloadURL);
-  //           });
-  //         }
-  //       );
-  //     });
-  //   };
-
-  //   const imageUrls = await Promise.all(
-  //     // const imgUrls = await Promise.all(
-  //     [...images].map((image) => storeImage(image))
-  //   ).catch(() => {
-  //     setLoading(false);
-  //     toast.error("Images not uploaded");
-  //     return;
-  //   });
-
-  //   const formDataCopy = {
-  //     ...formData,
-  //     // imgUrls,
-  //     imageUrls,
-  //     geolocation,
-  //     timestamp: serverTimestamp(),
-  //   };
-
-  //   formDataCopy.location = address;
-  //   delete formDataCopy.images;
-  //   delete formDataCopy.address;
-  //   !formDataCopy.offer && delete formDataCopy.discountedPrice;
-
-  //   const docRef = await addDoc(collection(db, "listings"), formDataCopy);
-  //   setLoading(false);
-  //   toast.success("Listing saved");
-  //   navigate(`/category/${formDataCopy.type}/${docRef.id}`);
-  // };
+    const docRef = await addDoc(collection(db, "listings"), formDataCopy);
+    setLoading(false);
+    toast.success("Listing saved");
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
+  };
 
   const onMutate = (e) => {
     let boolean = null;
