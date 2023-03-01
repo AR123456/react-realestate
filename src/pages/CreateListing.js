@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+// imports from google for file upload
+//https://www.udemy.com/course/react-front-to-back-2022/learn/lecture/29769184#questions
+//https://firebase.google.com/docs/storage/web/upload-files?authuser=0
 import {
   getStorage,
   ref,
@@ -7,9 +10,11 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+// db from config file
 import { db } from "../firebase.config";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+// using uuid to get a unique id for the file upload
 import { v4 as uuidv4 } from "uuid";
 import Spinner from "../components/Spinner";
 
@@ -115,7 +120,9 @@ function CreateListing() {
 
       if (location === undefined || location.includes("undefined")) {
         setLoading(false);
+
         toast.error("Please enter a correct address");
+        console.log(location);
         return;
       }
     } else {
@@ -123,16 +130,18 @@ function CreateListing() {
       geolocation.lng = longitude;
     }
 
-    // Store image in firebase
+    // Store image in firebase//////////////////////////////////////////////////
     const storeImage = async (image) => {
+      // need to return a new promise so need resovle, reject
       return new Promise((resolve, reject) => {
         const storage = getStorage();
+        // nameing convention to current user image name and a unique id
         const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
 
         const storageRef = ref(storage, "images/" + fileName);
-
+        //  per google docs need upload task
         const uploadTask = uploadBytesResumable(storageRef, image);
-
+        // boiler plate code from google
         uploadTask.on(
           "state_changed",
           (snapshot) => {
@@ -151,19 +160,22 @@ function CreateListing() {
             }
           },
           (error) => {
+            // reject if promise fails
             reject(error);
           },
           () => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              // this is what is going to go into firestore
               resolve(downloadURL);
             });
           }
         );
       });
     };
-
+    // call for all the uploaded , promise.all resolves multiple promises
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
     const imageUrls = await Promise.all(
       // const imgUrls = await Promise.all(
       [...images].map((image) => storeImage(image))
