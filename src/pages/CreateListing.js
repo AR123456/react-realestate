@@ -9,6 +9,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+// imports for image upload
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 // db from config file
 import { db } from "../firebase.config";
