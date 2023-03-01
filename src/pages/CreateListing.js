@@ -118,6 +118,7 @@ function CreateListing() {
         data.status === "ZERO_RESULTS"
           ? undefined
           : data.results[0]?.formatted_address;
+      // console.log(location);
 
       if (location === undefined || location.includes("undefined")) {
         setLoading(false);
@@ -193,7 +194,7 @@ function CreateListing() {
       geolocation,
       timestamp: serverTimestamp(),
     };
-
+    // set to what is typed into address feild
     formDataCopy.location = address;
     delete formDataCopy.images;
     delete formDataCopy.address;
