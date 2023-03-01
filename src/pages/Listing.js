@@ -58,7 +58,7 @@ function Listing() {
           </SwiperSlide>
         ))}
       </Swiper>
-
+      {/* copy link to clipboard */}
       <div
         className="shareIconDiv"
         onClick={() => {
