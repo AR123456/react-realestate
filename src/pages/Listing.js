@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 // import { Helmet } from 'react-helmet'
-// import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+// to use leaflet
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 // import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
 // import { Swiper, SwiperSlide } from 'swiper/react'
 // import 'swiper/swiper-bundle.css'
@@ -112,7 +113,7 @@ function Listing() {
         </ul>
 
         <p className="listingLocationTitle">Location</p>
-
+        {/* leaflet package  */}
         <div className="leafletContainer">
           <MapContainer
             style={{ height: "100%", width: "100%" }}
@@ -120,6 +121,7 @@ function Listing() {
             zoom={13}
             scrollWheelZoom={false}
           >
+            {/* open street maps  */}
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
