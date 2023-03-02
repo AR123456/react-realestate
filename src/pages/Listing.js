@@ -71,7 +71,7 @@ function Listing() {
       >
         <img src={shareIcon} alt="" />
       </div>
-
+      {/* show user copied  */}
       {shareLinkCopied && <p className="linkCopied">Link Copied!</p>}
 
       <div className="listingDetails">
@@ -87,6 +87,7 @@ function Listing() {
         </p>
         <p className="listingLocation">{listing.location}</p>
         <p className="listingType">
+          {/* display if rent or sale  */}
           For {listing.type === "rent" ? "Rent" : "Sale"}
         </p>
         {listing.offer && (
@@ -148,3 +149,4 @@ function Listing() {
 export default Listing;
 
 // https://stackoverflow.com/questions/67552020/how-to-fix-error-failed-to-compile-node-modules-react-leaflet-core-esm-pat
+// Brads course  https://www.udemy.com/course/react-front-to-back-2022/learn/lecture/29769212#overview
