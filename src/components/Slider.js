@@ -49,7 +49,7 @@ function Slider() {
     listings && (
       <>
         <p className="exploreHeading">Recommended</p>
-
+        {/* stuff wor swiper package  */}
         <Swiper slidesPerView={1} pagination={{ clickable: true }}>
           {listings.map(({ data, id }) => (
             <SwiperSlide
@@ -78,3 +78,4 @@ function Slider() {
 }
 
 export default Slider;
+// slider  https://www.udemy.com/course/react-front-to-back-2022/learn/lecture/29769238#overview
