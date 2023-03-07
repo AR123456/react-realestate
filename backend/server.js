@@ -8,34 +8,10 @@ const app = express();
 app.use(bodyParser.json());
 // setting up routes
 app.get("/", (req, res) => {
-  res.send("Hello");
-});
-//  doing some testing of the VS Code REST extension
-app.post("/", (req, res) => {
-  if (Object.keys(req.body).length > 0) {
-    res.json({
-      received: req.body,
-    });
-  } else {
-    res.send("got the post ");
-  }
-});
-app.get("/auth-endpoint", (req, res) => {
-  if (
-    req.headers.authorization &&
-    req.headers.authorization == "my-api-key-123"
-  ) {
-    res.send("Authorized");
-  } else {
-    res.status(401).send();
-  }
+  // res.send("Hello");
+  res.json({ message: "Hello support desk" });
 });
 
 app.listen(PORT, () =>
   console.log(`Server started on port http://localhost:${PORT}`)
 );
-
-const app2 = express();
-app2.use(bodyParser.json());
-app2.get("/", (req, res) => res.send("hello from the other enviroment "));
-app2.listen(9090);

@@ -2,19 +2,7 @@
 
 get http://localhost:5000
 
-### 
-
-post http://localhost:5000
-
-### 
-get http://localhost:5000/auth-endpoint
-Authorization: my-api-key-123
 
 ###
 get {{hostname}}
-
-###
-post {{hostname}}
-###
-get {{hostname}}/auth-endpoint
-Authorization: my-api-key-123
+ 
