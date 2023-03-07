@@ -1,3 +1,1 @@
-## ticketing app with react
-
-## Mongo DB , node , express
+npm run server starts the server
