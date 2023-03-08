@@ -13,6 +13,7 @@ app.get("/", (req, res) => {
 });
 // using route from another file
 app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/users/login", require("./routes/userRoutes"));
 
 app.listen(PORT, () =>
   console.log(`Server started on port http://localhost:${PORT}`)
