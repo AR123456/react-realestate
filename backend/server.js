@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 // setting up routes
 app.get("/", (req, res) => {
   // res.send("Hello");
-  res.status(201).json({ message: "Hello support desk" });
+  res.status(200).json({ message: "Hello support desk" });
 });
 
 app.listen(PORT, () =>
