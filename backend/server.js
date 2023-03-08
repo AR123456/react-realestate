@@ -11,6 +11,8 @@ app.get("/", (req, res) => {
   // res.send("Hello");
   res.status(200).json({ message: "Hello support desk" });
 });
+// using route from another file
+app.use("/api/users", require("./routes/userRoutes"));
 
 app.listen(PORT, () =>
   console.log(`Server started on port http://localhost:${PORT}`)
