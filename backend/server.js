@@ -1,12 +1,11 @@
 //common js syntax ( not ES2015 import)
 const express = require("express");
-// to pars the json - dont need body parser any more
-// const bodyParser = require("body-parser");
+
 const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 8000;
 
 const app = express();
-// app.use(bodyParser.json());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // setting up routes

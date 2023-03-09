@@ -8,10 +8,12 @@ get {{hostname}}
 
 ###
 post {{hostname}}/api/users
-Body:{
-name:Brad,
-email:brad@gmail,
-password:123456
+Content-Type: application/json
+
+ {
+"name":"Brad",
+"email":"brad@gmail",
+"password":"123456"
 }    
  
 ###
