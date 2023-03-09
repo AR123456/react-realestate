@@ -9,7 +9,9 @@ const registerUser = (req, res) => {
   // validation - did client send all the stuff
   if (!name || !email || !password) {
     // did not get -send client error
-    return res.status(400).json({ message: "data is missing " });
+    // return res.status(400).json({ message: "data is missing " });
+    res.status(400);
+    throw new Error("Missing data ");
   }
   res.send("Register route from the controller");
 };

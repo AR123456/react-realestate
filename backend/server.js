@@ -2,6 +2,7 @@
 const express = require("express");
 
 const dotenv = require("dotenv").config();
+const { errorHandler } = require("./middleware/errorMiddleware");
 const PORT = process.env.PORT || 8000;
 
 const app = express();
@@ -16,6 +17,8 @@ app.get("/", (req, res) => {
 // bring in routes
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/users/login", require("./routes/userRoutes"));
+
+app.use(errorHandler);
 
 app.listen(PORT, () =>
   console.log(`Server started on port http://localhost:${PORT}`)
