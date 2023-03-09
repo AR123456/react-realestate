@@ -1,9 +1,9 @@
 // putting the response logic here
-
+const asyncHandler = require("express-async-handler");
 //@desc Register a new user
 //@route /api/users
 //@access Public
-const registerUser = (req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
   // console.log(req.body);
   const { name, email, password } = req.body;
   // validation - did client send all the stuff
@@ -14,13 +14,13 @@ const registerUser = (req, res) => {
     throw new Error("Missing data ");
   }
   res.send("Register route from the controller");
-};
+});
 //@desc Register a new user
 //@route /api/users/login
 //@access Public
-const loginUser = (req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
   res.send("Login route from the controller");
-};
+});
 
 module.exports = {
   registerUser,
