@@ -2,9 +2,18 @@
 
 get http://localhost:5000
 
-
 ###
 get {{hostname}}
+
+
 ###
-get {{hostname}}/api/users
+post {{hostname}}/api/users
+Body:{
+name:Brad,
+email:brad@gmail,
+password:123456
+}    
+ 
+###
+post {{hostname}}/api/users/login
  

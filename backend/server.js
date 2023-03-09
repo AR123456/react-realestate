@@ -1,5 +1,6 @@
 //common js syntax ( not ES2015 import)
 const express = require("express");
+// to pars the json
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 8000;
@@ -11,7 +12,7 @@ app.get("/", (req, res) => {
   // res.send("Hello");
   res.status(200).json({ message: "Hello support desk" });
 });
-// using route from another file
+// bring in routes
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/users/login", require("./routes/userRoutes"));
 
