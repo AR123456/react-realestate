@@ -4,12 +4,9 @@ const asyncHandler = require("express-async-handler");
 //@route /api/users
 //@access Public
 const registerUser = asyncHandler(async (req, res) => {
-  // console.log(req.body);
   const { name, email, password } = req.body;
   // validation - did client send all the stuff
   if (!name || !email || !password) {
-    // did not get -send client error
-    // return res.status(400).json({ message: "data is missing " });
     res.status(400);
     throw new Error("Missing data ");
   }
