@@ -1,21 +1,8 @@
 //common js syntax ( not ES2015 import)
 const express = require("express");
-const mongoose = require("mongoose");
+const colors = require("colors");
 const dotenv = require("dotenv").config();
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.mongoURI, {
-      useNewUrlParser: true,
-      // useCreateIndex: true,
-      // useFindAndModify: false,
-      // useUnifiedTopology: true,
-    });
-    console.log("MongoDB Connected");
-  } catch (err) {
-    console.log(err.message);
-    process.exit(1);
-  }
-};
+
 connectDB();
 
 const { errorHandler } = require("./middleware/errorMiddleware");
