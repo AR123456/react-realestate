@@ -1,5 +1,8 @@
 // putting the response logic here
 const asyncHandler = require("express-async-handler");
+// bcrypt to hash pass
+const bcrypt = require("bcryptjs");
+const User = require("../models/userModel");
 //@desc Register a new user
 //@route /api/users
 //@access Public
@@ -10,6 +13,8 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Missing data ");
   }
+  // does user email exist ?
+  const userExists = await User.findOne({ email });
   res.send("Register route from the controller");
 });
 //@desc Register a new user
