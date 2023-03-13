@@ -45,8 +45,7 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new error("Invalid user data ");
   }
-
-  res.send("Register route from the controller");
+  // make sure to update connect string to point at db
 });
 //@desc Register a new user
 //@route /api/users/login
