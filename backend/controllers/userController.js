@@ -15,6 +15,37 @@ const registerUser = asyncHandler(async (req, res) => {
   }
   // does user email exist ?
   const userExists = await User.findOne({ email });
+
+  if (userExists) {
+    res.status(400);
+    throw new Error(
+      "User already exists or some message less valuable to scammers"
+    );
+  }
+  // this user doesent exist so hash the password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  // create the user
+  const user = await User.create({
+    // use what we got from body to create
+    name,
+    email,
+    password: hashedPassword,
+  });
+  // if the user was created return the id and token
+  if (user) {
+    // 201 all good something created
+    res.status(201).json({
+      // send this data back to the db
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    });
+  } else {
+    res.status(400);
+    throw new error("Invalid user data ");
+  }
+
   res.send("Register route from the controller");
 });
 //@desc Register a new user
