@@ -11,9 +11,9 @@ const jwt = require("jsonwebtoken");
 //@route /api/users
 //@access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, phone } = req.body;
   // validation - did client send all the stuff
-  if (!name || !email || !password) {
+  if (!name || !email || !password || !phone) {
     res.status(400);
     throw new Error("Missing data ");
   }
@@ -34,6 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
     // use what we got from body to create
     name,
     email,
+    phone,
     password: hashedPassword,
   });
   // if the user was created return the id and token
@@ -44,6 +45,9 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      phone: user.phone,
+      // send the jwt too
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -66,6 +70,9 @@ const loginUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+
+      // create the jwt
+      token: generateToken(user._id),
     });
   } else {
     res.status(401);
@@ -75,6 +82,12 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+// creating the generate password function = this could be in another file
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
 module.exports = {
   registerUser,
   loginUser,
