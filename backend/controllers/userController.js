@@ -2,7 +2,11 @@
 const asyncHandler = require("express-async-handler");
 // bcrypt to hash pass
 const bcrypt = require("bcryptjs");
+// bring in the user model
 const User = require("../models/userModel");
+// give the user a jwt
+const jwt = require("jsonwebtoken");
+
 //@desc Register a new user
 //@route /api/users
 //@access Public
