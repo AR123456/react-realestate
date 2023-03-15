@@ -51,7 +51,24 @@ const registerUser = asyncHandler(async (req, res) => {
 //@route /api/users/login
 //@access Public
 const loginUser = asyncHandler(async (req, res) => {
-  res.send("Login route from the controller");
+  // get the email and pw from body
+  const { email, password } = req.body;
+  // look to db for matching email
+  const user = await User.findOne({ email });
+  // if there is a user check password- brypt compare
+  if (user && (await bcrypt.compare(password, user.password))) {
+    //yes its a match
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    });
+  } else {
+    res.status(401);
+    throw new Error(
+      "Invalid credentials or something less useful to scammers "
+    );
+  }
 });
 
 module.exports = {
