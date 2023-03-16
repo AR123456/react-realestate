@@ -7,11 +7,13 @@ const {
   loginUser,
   getMe,
 } = require("../controllers/userController");
+// bring in protect midleware
+const { protect } = require("../middleware/authMiddleware");
 
 router.post("/", registerUser);
 
 router.post("/login", loginUser);
 // pass in the getMe function from controller
 
-router.get("/me", getMe);
+router.get("/me", protect, getMe);
 module.exports = router;

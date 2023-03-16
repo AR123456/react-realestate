@@ -1,4 +1,5 @@
 @hostname = http://localhost:5000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGM4ZTRmMDEwNWE4MDgwYzVmZWExYSIsImlhdCI6MTY3ODU0NzYwNSwiZXhwIjoxNjgxMTM5NjA1fQ.XpmJiVl3rh80Fs7fLiXy9hQTS-doJzoz7uFjg4ezIbM
 
 get http://localhost:5000
 
@@ -8,10 +9,9 @@ get {{hostname}}
 get {{hostname}}/api/users/me
 ###
 get {{hostname}}/api/users/me
-Content-Type: Bearer Token
+Authorization: Bearer {{token}}
 
-{}
-
+ 
 
 ###
 post {{hostname}}/api/users
