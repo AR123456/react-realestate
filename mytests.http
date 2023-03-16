@@ -4,6 +4,8 @@ get http://localhost:5000
 
 ###
 get {{hostname}}
+###
+get {{hostname}}/api/users/me
 
 
 ###

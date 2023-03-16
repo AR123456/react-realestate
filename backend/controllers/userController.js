@@ -70,8 +70,7 @@ const loginUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-
-      // create the jwt
+      //  jwt
       token: generateToken(user._id),
     });
   } else {
@@ -80,6 +79,17 @@ const loginUser = asyncHandler(async (req, res) => {
       "Invalid credentials or something less useful to scammers "
     );
   }
+});
+//@desc Register a new user
+//@route /api/users/me
+//@access Private
+// a protected route
+const getMe = asyncHandler(async (req, res) => {
+  //  get the token from req.body
+  //  match token to from user to what is stored
+  // is token valid
+  // if valid allow on route , if not error
+  res.send("me");
 });
 
 // creating the generate password function = this could be in another file
@@ -91,4 +101,5 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  getMe,
 };
