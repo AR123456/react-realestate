@@ -13,5 +13,5 @@ router.post("/", registerUser);
 router.post("/login", loginUser);
 // pass in the getMe function from controller
 
-router.post("/me", getMe);
+router.get("/me", getMe);
 module.exports = router;

@@ -80,15 +80,11 @@ const loginUser = asyncHandler(async (req, res) => {
     );
   }
 });
-//@desc Register a new user
+//@desc Get Current  user
 //@route /api/users/me
 //@access Private
 // a protected route
 const getMe = asyncHandler(async (req, res) => {
-  //  get the token from req.body
-  //  match token to from user to what is stored
-  // is token valid
-  // if valid allow on route , if not error
   res.send("me");
 });
 
