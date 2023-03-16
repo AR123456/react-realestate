@@ -85,6 +85,7 @@ const loginUser = asyncHandler(async (req, res) => {
 //@access Private
 // a protected route
 const getMe = asyncHandler(async (req, res) => {
+  // use middleware for protected routes
   res.send("me");
 });
 

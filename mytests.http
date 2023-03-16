@@ -6,6 +6,11 @@ get http://localhost:5000
 get {{hostname}}
 ###
 get {{hostname}}/api/users/me
+###
+get {{hostname}}/api/users/me
+Content-Type: Bearer Token
+
+{}
 
 
 ###
