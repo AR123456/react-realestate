@@ -86,8 +86,13 @@ const loginUser = asyncHandler(async (req, res) => {
 // a protected route
 const getMe = asyncHandler(async (req, res) => {
   // use middleware for protected routes
-  // get user by id
-  res.status(200).json(req.user);
+  // deconstruct the user object to just get these parts in the response
+  const user = {
+    id: req.user._id,
+    email: req.user.email,
+    name: req.user.name,
+  };
+  res.status(200).json(user);
 });
 
 // creating the generate password function = this could be in another file
