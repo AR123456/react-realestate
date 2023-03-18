@@ -1,7 +1,23 @@
-import React from "react";
+import { useState } from "react";
+import { FaUser } from "react-icons/fa";
 
 const Register = () => {
-  return <div>Register for the page</div>;
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+  const { name, email, password, password2 } = formData;
+  return (
+    <div>
+      <section className="heading">
+        <h1>
+          <FaUser>Register</FaUser>
+        </h1>
+      </section>
+    </div>
+  );
 };
 
 export default Register;
