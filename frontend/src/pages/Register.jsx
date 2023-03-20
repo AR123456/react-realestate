@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
 
 const Register = () => {
@@ -16,6 +17,16 @@ const Register = () => {
       [e.target.name]: e.target.value,
     }));
   };
+  const onSubmit = (e) => {
+    //validate that pw and email match then send data to back end, get token back
+    e.preventDefault();
+    if (email !== email2) {
+      toast.error("Emails do not match");
+    }
+    if (password !== password2) {
+      toast.error("Passwords do not match");
+    }
+  };
   return (
     <div>
       <section className="heading">
@@ -25,7 +36,7 @@ const Register = () => {
         <p>Create account</p>
       </section>
       <section className="form">
-        <form action="">
+        <form onSubmit={onSubmit}>
           <div className="form-group">
             <input
               type="email"
@@ -72,7 +83,7 @@ const Register = () => {
           </div>
           <div className="form-group">
             <input
-              type="password2"
+              type="password"
               className="form-control"
               id="password2"
               name="password2"
