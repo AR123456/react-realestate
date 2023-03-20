@@ -404,3 +404,6 @@ footer {
     font-size: 1.5rem;
   }
 }
+.toast-position {
+  top: 50rem !important;
+}
