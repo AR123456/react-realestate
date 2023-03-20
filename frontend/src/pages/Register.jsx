@@ -19,13 +19,6 @@ const Register = () => {
   };
   const onSubmit = (e) => {
     //validate that pw and email match then send data to back end, get token back
-    e.preventDefault();
-    if (email !== email2) {
-      toast.error("Emails do not match");
-    }
-    if (password !== password2) {
-      toast.error("Passwords do not match");
-    }
   };
   return (
     <div>
@@ -83,7 +76,7 @@ const Register = () => {
           </div>
           <div className="form-group">
             <input
-              type="password"
+              type="password2"
               className="form-control"
               id="password2"
               name="password2"

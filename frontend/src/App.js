@@ -20,7 +20,7 @@ function App() {
           </Routes>
         </div>
       </Router>
-      <ToastContainer className="toast-position" />
+      <ToastContainer />
     </div>
   );
 }
