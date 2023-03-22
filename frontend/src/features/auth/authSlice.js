@@ -7,7 +7,7 @@ const initialState = {
   isLoading: false,
   message: "",
 };
-
+// can see state if redux dev tools now
 export const authSlice = createSlice({
   name: "auth",
   initialState,
