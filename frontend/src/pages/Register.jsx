@@ -35,6 +35,14 @@ const Register = () => {
     }
     if (password !== password2) {
       toast.error("Passwords do not match");
+    } else {
+      const userData = {
+        name,
+        email,
+        password,
+      };
+      // dispatch register from authSlice.js when form is submitted
+      dispatch(register(userData));
     }
   };
   return (
@@ -49,7 +57,7 @@ const Register = () => {
         <form onSubmit={onSubmit}>
           <div className="form-group">
             <input
-              type="email"
+              type="text"
               className="form-control"
               id="name"
               name="name"
