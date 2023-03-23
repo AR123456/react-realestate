@@ -7,7 +7,14 @@ const initialState = {
   isLoading: false,
   message: "",
 };
-// can see state if redux dev tools now
+// hood the form up to redux
+// async Thunk
+export const register = createAsyncThunk(
+  "auth/register",
+  async (user, thunkAPI) => {
+    console.log(user);
+  }
+);
 export const authSlice = createSlice({
   name: "auth",
   initialState,

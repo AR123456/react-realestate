@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
-
+// hood the form up to redux
+import { ueSelector, useDispatch } from "react-redux";
+// bring in register action
+import { register } from "../features/auth/authSlice";
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -11,6 +14,10 @@ const Register = () => {
     password2: "",
   });
   const { name, email, email2, password, password2 } = formData;
+  //
+  const dispatch = useDispatch();
+  // bring in pieces of state
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
