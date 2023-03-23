@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
 // hood the form up to redux
-import { ueSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // bring in register action
 import { register } from "../features/auth/authSlice";
 const Register = () => {
@@ -17,6 +17,9 @@ const Register = () => {
   //
   const dispatch = useDispatch();
   // bring in pieces of state
+  const { user, isLoading, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
 
   const onChange = (e) => {
     setFormData((prevState) => ({
