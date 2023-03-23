@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { FaSignInAlt } from "react-icons/fa";
+// hood the form up to redux
+import { useSelector, useDispatch } from "react-redux";
+// bring in login action
+import { login } from "../features/auth/authSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
-
     password: "",
   });
-  const { name, password } = formData;
+  const { email, password } = formData;
+  // redux
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -18,7 +27,12 @@ const Login = () => {
   const onSubmit = (e) => {
     //validate that pw and email match then send data to back end, get token back
     e.preventDefault();
-    //
+    // get form data from local state
+    const userData = {
+      email,
+      password,
+    };
+    dispatch(login(userData));
   };
   return (
     <div>
@@ -34,11 +48,11 @@ const Login = () => {
             <input
               type="email"
               className="form-control"
-              id="name"
-              name="name"
-              value={name}
+              id="email"
+              name="email"
+              value={email}
               onChange={onChange}
-              placeholder="Enter name"
+              placeholder="Enter email"
             />
           </div>
 
