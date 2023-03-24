@@ -1,5 +1,5 @@
 import axios from "axios";
-
+// add proxy to front end
 const API_URL = "/api/user";
 // register user
 const register = async (userData) => {
