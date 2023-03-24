@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-dom";
 import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
-// hood the form up to redux
+
+// hook the form up to redux
 import { useSelector, useDispatch } from "react-redux";
 // bring in register action
-import { register } from "../features/auth/authSlice";
+import { register, reset } from "../features/auth/authSlice";
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -16,11 +18,20 @@ const Register = () => {
   const { name, email, email2, password, password2 } = formData;
   //
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // bring in pieces of state
-  const { user, isLoading, isSuccess, message } = useSelector(
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    } // redirect when loggedin
+    if (isSuccess || user) {
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [isError, isSuccess, user, message, navigate, dispatch]);
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
