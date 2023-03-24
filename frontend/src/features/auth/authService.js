@@ -1,6 +1,6 @@
 import axios from "axios";
 // add proxy to front end
-const API_URL = "/api/user";
+const API_URL = "/api/users/";
 // register user
 const register = async (userData) => {
   const response = await axios.post(API_URL, userData);
