@@ -11,10 +11,21 @@ const register = async (userData) => {
   // user data and token
   return response.data;
 };
+// login user
+const login = async (userData) => {
+  const response = await axios.post(API_URL + "login", userData);
+  if (response.data) {
+    // save to local storage - it can only hold strings
+    localStorage.setItem("user", JSON.stringify(response.data));
+  }
+  // user data and token
+  return response.data;
+};
 // logout user
 const logout = () => localStorage.removeItem("user");
 const authService = {
   register,
   logout,
+  login,
 };
 export default authService;
