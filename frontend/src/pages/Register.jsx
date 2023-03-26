@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
-
 // hook the form up to redux
 import { useSelector, useDispatch } from "react-redux";
 // bring in register action
 import { register, reset } from "../features/auth/authSlice";
+import Spinner from "../components/Spinner";
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -56,6 +56,9 @@ const Register = () => {
       dispatch(register(userData));
     }
   };
+  if (isLoading) {
+    return <Spinner></Spinner>;
+  }
   return (
     <div>
       <section className="heading">
