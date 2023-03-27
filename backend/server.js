@@ -19,6 +19,7 @@ app.get("/", (req, res) => {
 // bring in routes
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/users/login", require("./routes/userRoutes"));
+app.use("/api/tickets", require("./routes/ticketRoutes"));
 
 app.use(errorHandler);
 
