@@ -35,4 +35,4 @@ const ticketSchema = mongoose.Schema(
     timestamps: true,
   }
 );
-module.exports = mongoose.model("Ticket", userSchema);
+module.exports = mongoose.model("Ticket", ticketSchema);
