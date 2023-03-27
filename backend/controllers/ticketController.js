@@ -7,8 +7,8 @@ const Ticket = require("../models/TicketModel");
 //@access Private
 
 const getTickets = asyncHandler(async (req, res) => {
-  // use middleware for protected routes
-
+  // get user using the id and the JWT
+  const user = await User.findById(req.user.id);
   res.status(200).json({ message: "getTickets" });
 });
 //@desc Create users tickets
