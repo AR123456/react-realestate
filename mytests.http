@@ -14,15 +14,6 @@ Authorization: Bearer {{token}}
 ###
 post {{hostname}}/api/tickets
 Authorization: Bearer {{token}}
-###
-post {{hostname}}/api/tickets
-Authorization: Bearer {{token}}
-
-Content-Type: application/json
- {
-"product":"phone",
-"description":"screen broken",
-}  
 
 ###
 get {{hostname}}/api/users/me
