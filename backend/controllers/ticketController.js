@@ -9,7 +9,13 @@ const Ticket = require("../models/TicketModel");
 const getTickets = asyncHandler(async (req, res) => {
   // get user using the id and the JWT
   const user = await User.findById(req.user.id);
-  res.status(200).json({ message: "getTickets" });
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+  const tickets = await Ticket.find({ user: req.user.id });
+  // res.status(200).json({ message: "getTickets" });
+  res.status(200).json(tickets);
 });
 //@desc Create users tickets
 //@route POST  /api/tickets/me
