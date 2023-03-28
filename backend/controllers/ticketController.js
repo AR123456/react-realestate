@@ -14,7 +14,6 @@ const getTickets = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
   const tickets = await Ticket.find({ user: req.user.id });
-  // res.status(200).json({ message: "getTickets" });
   res.status(200).json(tickets);
 });
 //@desc Create users tickets
@@ -22,9 +21,27 @@ const getTickets = asyncHandler(async (req, res) => {
 //@access Private
 
 const createTicket = asyncHandler(async (req, res) => {
-  // use middleware for protected routes
+  // other things could be sent here
+  const { product, description } = req.body;
+  // make sure we have the product and description
+  if (!product || !description) {
+    res.status(400);
+    throw new Error("Must have a product and description of problem");
+  }
+  // get user using the id and the JWT
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+  const ticket = await Ticket.create({
+    product,
+    description,
+    user: req.user.id,
+    status: "new",
+  });
 
-  res.status(200).json({ message: "createTicket" });
+  res.status(201).json(ticket);
 });
 
 module.exports = {
