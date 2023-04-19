@@ -1,5 +1,5 @@
 @hostname = http://localhost:5000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjA1NTc0NDVkZTMzZGNlNjViNmE3NyIsImlhdCI6MTY3OTg0MDYyOCwiZXhwIjoxNjgyNDMyNjI4fQ.VCTmuEv91KztBe-LaZ33EyNz2cGhNiysU5qfMwxGMI4
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2U3ZDliYjRlMmQyNjBjYzFlMTdhNyIsImlhdCI6MTY4MTgxNjk4NywiZXhwIjoxNjg0NDA4OTg3fQ.JPwijNBREr3ISx83ERzr9nmdsEtLfgv2TuVHatxJ06o
 
 get http://localhost:5000
 
@@ -16,12 +16,12 @@ post {{hostname}}/api/tickets
 Authorization: Bearer {{token}}
 ###
 post {{hostname}}/api/tickets
-Authorization: Bearer {{token}}
 
 Content-Type: application/json
+Authorization: Bearer {{token}}
  {
-"product":"phone",
-"description":"screen broken",
+    "product":"phone",
+    "description":"screen broken",
 }  
 
 ###

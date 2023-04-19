@@ -34,13 +34,14 @@ const createTicket = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("User not found");
   }
+  // create ticket
   const ticket = await Ticket.create({
     product,
     description,
     user: req.user.id,
     status: "new",
   });
-
+  // created
   res.status(201).json(ticket);
 });
 
