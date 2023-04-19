@@ -40,11 +40,6 @@ const getTicket = asyncHandler(async (req, res) => {
   }
   res.status(200).json(ticket);
 });
-module.exports = {
-  getTickets,
-  getTicket,
-  createTicket,
-};
 
 //@desc Create users tickets
 //@route POST  /api/tickets/me
@@ -74,3 +69,8 @@ const createTicket = asyncHandler(async (req, res) => {
   // created
   res.status(201).json(ticket);
 });
+module.exports = {
+  createTicket,
+  getTickets,
+  getTicket,
+};
