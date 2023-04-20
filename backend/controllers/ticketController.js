@@ -96,10 +96,10 @@ const deleteTicket = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true });
 });
 //@desc Updagte a ticket
-//@route GET  /api/tickets/:id
+//@route PUT  /api/tickets/:id
 //@access Private
 
-const getTicket = asyncHandler(async (req, res) => {
+const updateTicket = asyncHandler(async (req, res) => {
   // get user using the id and the JWT
   const user = await User.findById(req.user.id);
   if (!user) {
@@ -116,10 +116,17 @@ const getTicket = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("Not Authorized");
   }
-  res.status(200).json(ticket);
+  const updatedTicket = await Ticket.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
+  res.status(200).json(updatedTicket);
 });
 module.exports = {
-  createTicket,
   getTickets,
   getTicket,
+  createTicket,
+  deleteTicket,
+  updateTicket,
 };
