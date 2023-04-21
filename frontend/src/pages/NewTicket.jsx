@@ -43,6 +43,18 @@ const NewTicket = () => {
               <option value="monitor">Monitor</option>
             </select>
           </div>
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <textarea
+              name="description"
+              id="description"
+              className="form-control"
+              placeholder="Description"
+              // value from local state
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+          </div>
         </form>
       </section>
     </>
