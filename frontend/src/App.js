@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NewTicket from "./pages/NewTicket";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -15,10 +16,13 @@ function App() {
         <div className="container">
           <Header />
           <Routes>
-            <Route path="/" element={<Home></Home>} />
-            <Route path="/login" element={<Login></Login>} />
-            <Route path="/register" element={<Register></Register>} />
-            <Route path="/new-ticket" element={<NewTicket></NewTicket>} />
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            {/* <Route path="/new-ticket" element={<NewTicket></NewTicket>} /> */}
+            <Route path="/new-ticket" element={<PrivateRoute />}>
+              <Route path="/new-ticket" element={<NewTicket />}></Route>
+            </Route>
           </Routes>
         </div>
       </Router>
