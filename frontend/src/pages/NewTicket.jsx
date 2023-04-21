@@ -4,15 +4,48 @@ import { useSelector } from "react-redux";
 // need to re direct to login page if not logged in - useAuth status hook, nested route in app.js
 const NewTicket = () => {
   const { user } = useSelector((state) => state.auth);
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [product, setProdict] = useState("");
+  const [name] = useState(user.name);
+  const [email] = useState(user.email);
+  const [product, setProduct] = useState("");
   const [description, setDescription] = useState("");
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div>
-      <h1>new</h1>
-    </div>
+    <>
+      <section className="heading">
+        <h1>Create new Ticket</h1>
+        <p>Please fill out form below</p>
+      </section>
+      <section className="form">
+        <div className="form-group">
+          <label htmlFor="name">Customer Name</label>
+          <input type="text" className="form-control" value={name} disabled />
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">Customer Email</label>
+          <input type="email" className="form-control" value={email} disabled />
+        </div>
+        <form onSubmit={onSubmit}>
+          <div className="form-group">
+            <label htmlFor="product">Product</label>
+            <select
+              name="product"
+              id="product"
+              value={product}
+              onChange={(e) => setProduct(e.target.value)}
+            >
+              <option value="phone">Phone</option>
+              <option value="tablet">Tablet</option>
+              <option value="printer">Printer</option>
+              <option value="monitor">Monitor</option>
+            </select>
+          </div>
+        </form>
+      </section>
+    </>
   );
 };
 
