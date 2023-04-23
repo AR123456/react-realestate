@@ -2,10 +2,10 @@
 const asyncHandler = require("express-async-handler");
 // bcrypt to hash pass
 const bcrypt = require("bcryptjs");
-// bring in the user model
-const User = require("../models/userModel");
 // give the user a jwt
 const jwt = require("jsonwebtoken");
+// bring in the user model
+const User = require("../models/userModel");
 
 //@desc Register a new user
 //@route /api/users
@@ -15,7 +15,7 @@ const registerUser = asyncHandler(async (req, res) => {
   // validation - did client send all the stuff
   if (!name || !email || !password) {
     res.status(400);
-    throw new Error("Missing data ");
+    throw new Error("Missing data");
   }
   // does user email exist ?
   const userExists = await User.findOne({ email });
@@ -34,7 +34,6 @@ const registerUser = asyncHandler(async (req, res) => {
     // use what we got from body to create
     name,
     email,
-
     password: hashedPassword,
   });
   // if the user was created return the id and token
@@ -45,13 +44,12 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-
       // send the jwt too
       token: generateToken(user._id),
     });
   } else {
     res.status(400);
-    throw new error("Invalid user data ");
+    throw new error("Invalid user data");
   }
   // make sure to update connect string to point at db
 });

@@ -1,20 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // get user from global state using redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { createTicket, reset } from "../features/tickets/ticketsSlice";
+import Spinner from "../components/Spinner";
+import BackButton from "../components/BackButton";
 // need to re direct to login page if not logged in - useAuth status hook, nested route in app.js
 const NewTicket = () => {
   const { user } = useSelector((state) => state.auth);
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.tickets
+  );
   const [name] = useState(user.name);
   const [email] = useState(user.email);
   const [product, setProduct] = useState("");
   const [description, setDescription] = useState("");
+  // initilize dispatch and navigate
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // check for error
+    if (isError) {
+      toast.error(message);
+    }
+    // if it works reset state to default and goto tickets
+    if (isSuccess) {
+      dispatch(reset());
+      navigate("/tickets");
+    }
+    dispatch(reset());
+  }, [dispatch, isError, isSuccess, navigate, message]);
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(product);
+    // dispatch the product and description
+    dispatch(createTicket({ product, description }));
   };
-
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <>
+      <BackButton url={"./"}></BackButton>
       <section className="heading">
         <h1>Create new Ticket</h1>
         <p>Please fill out form below</p>
