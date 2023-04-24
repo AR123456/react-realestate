@@ -14,7 +14,23 @@ const initialState = {
   message: "",
 };
 // create a ticket
+export const createTicket = createAsyncThunk(
+  "auth/register",
+  async (ticketData, thunkAPI) => {
+    try {
+      return await ticketService.createTicket(ticketData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
 
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 // the slice
 const ticketsSlice = createSlice({
   // pass in object
