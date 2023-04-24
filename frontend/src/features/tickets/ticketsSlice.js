@@ -13,12 +13,16 @@ const initialState = {
   isLoading: false,
   message: "",
 };
-// create a ticket
+// create a ticket- need to address the token - user is in local storage and in state
+// thunkAPI method getState() - can get state from anywhere, can get user state so user token
+
 export const createTicket = createAsyncThunk(
   "auth/register",
   async (ticketData, thunkAPI) => {
     try {
-      return await ticketService.createTicket(ticketData);
+      const token = thunkAPI.getState().auth.user.token;
+      // pass the token with data to the service
+      return await ticketService.createTicket(ticketData, token);
     } catch (error) {
       const message =
         (error.response &&
