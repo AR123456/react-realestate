@@ -13,13 +13,26 @@ const initialState = {
   isLoading: false,
   message: "",
 };
-
+// the slice
 const ticketsSlice = createSlice({
-  name: second,
+  // pass in object
+  name: "ticket",
   initialState,
-  reducers: {},
+  reducers: {
+    // reset to initial state
+    reset: (state) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
+    },
+    extraReducers: (builder) => {
+      // cases go here
+    },
+  },
 });
 
-export const {} = ticketsSlice.actions;
+export const { reset } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;
+// GOTO app folder, store and bring this in
