@@ -13,6 +13,8 @@ const initialState = {
   isLoading: false,
   message: "",
 };
+// create a ticket
+
 // the slice
 const ticketsSlice = createSlice({
   // pass in object
