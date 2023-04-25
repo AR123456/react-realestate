@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // get user from global state using redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { createTicket, reset } from "../features/tickets/ticketsSlice";
+import Spinner from "../components/Spinner";
+
 // need to re direct to login page if not logged in - useAuth status hook, nested route in app.js
 const NewTicket = () => {
   const { user } = useSelector((state) => state.auth);
