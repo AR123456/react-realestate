@@ -9,15 +9,38 @@ import Spinner from "../components/Spinner";
 // need to re direct to login page if not logged in - useAuth status hook, nested route in app.js
 const NewTicket = () => {
   const { user } = useSelector((state) => state.auth);
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.ticket
+  );
   const [name] = useState(user.name);
   const [email] = useState(user.email);
   const [product, setProduct] = useState("");
   const [description, setDescription] = useState("");
+  // initilize dispatch and navigate
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // check for error
+    if (isError) {
+      toast.error(message);
+    }
+    // if it works reset state to default and goto tickets
+    if (isSuccess) {
+      dispatch(reset());
+      navigate("/tickets");
+    }
+    dispatch(reset());
+  }, [dispatch, isError, isSuccess, navigate, message]);
 
   const onSubmit = (e) => {
     e.preventDefault();
+    // dispatch the product and description
+    dispatch(createTicket({ product, description }));
   };
-
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <>
       <section className="heading">
