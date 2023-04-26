@@ -16,7 +16,7 @@ const initialState = {
 // thunkAPI method getState() - can get state from anywhere, can get user state so user token
 
 export const createTicket = createAsyncThunk(
-  "auth/register",
+  "tickets/create",
   async (ticketData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -36,7 +36,7 @@ export const createTicket = createAsyncThunk(
 );
 // get user the tickets
 export const getTickets = createAsyncThunk(
-  "auth/register",
+  "tickets/getAll",
   async (ticketData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
