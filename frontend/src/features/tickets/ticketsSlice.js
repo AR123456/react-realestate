@@ -37,11 +37,12 @@ export const createTicket = createAsyncThunk(
 // get user the tickets
 export const getTickets = createAsyncThunk(
   "tickets/getAll",
-  async (ticketData, thunkAPI) => {
+  // passing in underscore still need thunkAPI
+  async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
       // pass the token with data to the service
-      return await ticketService.createTicket(ticketData, token);
+      return await ticketService.getTickets(token);
     } catch (error) {
       const message =
         (error.response &&
