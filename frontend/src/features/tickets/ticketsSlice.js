@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ticketService from "./ticketsService";
 
-// initical state having to do with tickets
 const initialState = {
   // array of multiple tickets
   tickets: [],
@@ -17,6 +16,26 @@ const initialState = {
 // thunkAPI method getState() - can get state from anywhere, can get user state so user token
 
 export const createTicket = createAsyncThunk(
+  "auth/register",
+  async (ticketData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      // pass the token with data to the service
+      return await ticketService.createTicket(ticketData, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+// get user the tickets
+export const getTickets = createAsyncThunk(
   "auth/register",
   async (ticketData, thunkAPI) => {
     try {
