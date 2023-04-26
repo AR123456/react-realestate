@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 const BackButton = ({ url }) => {
   return (
     <div>
-      BackButton
-      <h1>back</h1>
+      <Link className="btn btn-reverse btn-back" to={url}>
+        <FaArrowAltCircleLeft />
+        Back
+      </Link>
     </div>
   );
 };

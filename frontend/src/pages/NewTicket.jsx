@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createTicket, reset } from "../features/tickets/ticketsSlice";
 import Spinner from "../components/Spinner";
-
+import BackButton from "../components/BackButton";
 // need to re direct to login page if not logged in - useAuth status hook, nested route in app.js
 const NewTicket = () => {
   const { user } = useSelector((state) => state.auth);
@@ -44,6 +44,7 @@ const NewTicket = () => {
   }
   return (
     <>
+      <BackButton url={"/"}></BackButton>
       <section className="heading">
         <h1>Create new Ticket</h1>
         <p>Please fill out form below</p>
