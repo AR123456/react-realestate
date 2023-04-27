@@ -26,7 +26,20 @@ const Tickets = () => {
   }
   return (
     <div>
-      <h1>tickets</h1>
+      <BackButton url="/"></BackButton>
+      <h1>Tickets</h1>
+      <div className="tickets">
+        <div className="ticket-headings">
+          <div>Date</div>
+          <div>Product</div>
+          <div>Status</div>
+          <div>
+            {tickets.map((ticket) => (
+              <TicketItem key={ticket._id} ticket={ticket} />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
