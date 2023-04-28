@@ -26,7 +26,7 @@ const Tickets = () => {
     return <Spinner />;
   }
   return (
-    <div>
+    <>
       <BackButton url="/"></BackButton>
       <h1>Tickets</h1>
       <div className="tickets">
@@ -34,14 +34,14 @@ const Tickets = () => {
           <div>Date</div>
           <div>Product</div>
           <div>Status</div>
-          <div>
-            {tickets.map((ticket) => (
-              <TicketItem key={ticket._id} ticket={ticket} />
-            ))}
-          </div>
+          <div></div>
         </div>
+
+        {tickets.map((ticket) => (
+          <TicketItem key={ticket._id} ticket={ticket} />
+        ))}
       </div>
-    </div>
+    </>
   );
 };
 
