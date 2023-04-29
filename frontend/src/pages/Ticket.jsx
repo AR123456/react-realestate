@@ -10,11 +10,15 @@ const Ticket = () => {
     (state) => state.tickets
   );
   const params = useParams();
+  const dispatch = useDispatch();
+  // get ticket Id from url
+  const { ticketId } = useParams();
   useEffect(() => {
     if (isError) {
       toast.error(message);
     }
-  });
+    dispatch(getTicket(ticketId));
+  }, [isError, message, ticketId]);
   return (
     <div>
       <h1>Details of a single ticket</h1>
