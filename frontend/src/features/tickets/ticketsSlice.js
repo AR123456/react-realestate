@@ -55,6 +55,28 @@ export const getTickets = createAsyncThunk(
     }
   }
 );
+// get details on a single ticket
+export const getTicket = createAsyncThunk(
+  "tickets/get",
+  // passing in underscore still need thunkAPI
+  async (ticketId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      // pass the token with data to the service
+      return await ticketService.getTicket(ticketId, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // the slice
 const ticketsSlice = createSlice({
   // pass in object
