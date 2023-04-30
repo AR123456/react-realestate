@@ -75,9 +75,29 @@ export const getTicket = createAsyncThunk(
       return thunkAPI.rejectWithValue(message);
     }
   }
+); // user close a ticket
+export const closeTicket = createAsyncThunk(
+  "tickets/close",
+  // passing in underscore still need thunkAPI
+  async (ticketId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      // pass the token with data to the service
+      return await ticketService.closeTicket(ticketId, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
 );
 
-// the slice
+///////// the slice
 const ticketsSlice = createSlice({
   // pass in object
   name: "ticket",
