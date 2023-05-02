@@ -26,10 +26,10 @@ const getNotes = asyncHandler(async (req, res) => {
 
   res.status(200).json(notes);
 });
-//@desc Add a note to  for a ticket
-//@route GET  /api/tickets/:ticketId/notes
+//@desc Create  a note to  for a ticket
+//@route POSY  /api/tickets/:ticketId/notes
 //@access Private
-const addNotes = asyncHandler(async (req, res) => {
+const addNote = asyncHandler(async (req, res) => {
   // Get user using the id in the JWT
   const user = await User.findById(req.user.id);
 
@@ -45,11 +45,16 @@ const addNotes = asyncHandler(async (req, res) => {
     throw new Error("User not authorized");
   }
 
-  const notes = await Note.find({ ticket: req.params.ticketId });
+  const note = await Note.create({
+    text: req.body.text,
+    isStaff: false,
+    ticket: req.params.ticketId,
+    user: req.user.id,
+  });
 
-  res.status(200).json(notes);
+  res.status(200).json(note);
 });
 module.exports = {
   getNotes,
-  // addNote,
+  addNote,
 };
