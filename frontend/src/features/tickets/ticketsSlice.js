@@ -75,7 +75,9 @@ export const getTicket = createAsyncThunk(
       return thunkAPI.rejectWithValue(message);
     }
   }
-); // user close a ticket
+);
+
+// user close a ticket
 export const closeTicket = createAsyncThunk(
   "tickets/close",
   // passing in underscore still need thunkAPI
