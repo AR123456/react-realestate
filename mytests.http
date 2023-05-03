@@ -1,0 +1,51 @@
+@hostname = http://localhost:5000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2ZkMWZkYTA5ZTc4MDE4MjM4NTQ3NCIsImlhdCI6MTY4MTkwNDEyNSwiZXhwIjoxNjg0NDk2MTI1fQ.x9Z4j6JN6W3wMRjJ0MbHxENzdKNhWE33fTRmvhmqAAA
+get http://localhost:5000
+
+###
+get {{hostname}}
+###
+get {{hostname}}/api/users/me
+
+###
+get {{hostname}}/api/tickets
+Authorization: Bearer {{token}}
+###
+post {{hostname}}/api/tickets
+Authorization: Bearer {{token}}
+###
+post {{hostname}}/api/tickets
+
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+ {
+"product":"phone",
+"description":"screen broken",
+}  
+
+###
+get {{hostname}}/api/users/me
+Authorization: Bearer {{token}}
+
+ 
+
+###
+post {{hostname}}/api/users
+Content-Type: application/json
+
+ {
+"name":"Brady",
+"email":"brady@gmail.com",
+"password":"123456"
+}    
+ 
+###
+post {{hostname}}/api/users/login
+Content-Type: application/json
+
+  {
+"name":"Brady",
+"email":"brady@gmail",
+"password":"123456"
+ } 
