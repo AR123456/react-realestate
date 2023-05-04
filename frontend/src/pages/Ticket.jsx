@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Modal from "react-modal;";
+import { FaPlus } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { getTicket, closeTicket } from "../features/tickets/ticketsSlice";
 import { getNotes, reset as notesReset } from "../features/notes/noteSlice";
@@ -20,7 +21,11 @@ const customStyles = {
     position: "relative",
   },
 };
+Modal.setAppElement("#root");
 const Ticket = () => {
+  const { modalIsOpen, setModalIsOpen } = useState(false);
+  const { noteText, setNoteText } = useState("");
+
   const { ticket, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.tickets
   );
@@ -46,6 +51,10 @@ const Ticket = () => {
     toast.success("Ticket Closed");
     navigate("/tickets");
   };
+  // open close Modal
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
+
   if (isLoading || notesIsLoading) {
     return <Spinner></Spinner>;
   }
@@ -74,10 +83,17 @@ const Ticket = () => {
             <p>{ticket.description}</p>
           </div>
           <h2>Notes</h2>
-          {notes.map((note) => (
-            <NoteItem key={note._id} note={note} />
-          ))}
         </header>
+        {ticket.status !== "closed" && (
+          <button onClick={openModal} className="btn">
+            <FaPlus />
+            Add Note
+          </button>
+        )}
+        {notes.map((note) => (
+          <NoteItem key={note._id} note={note} />
+        ))}
+
         {ticket.status !== "closed" && (
           <button onClick={onTicketClose} className="btn btn-block btn-danger">
             Close Ticket
