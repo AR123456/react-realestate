@@ -26,4 +26,3 @@ const NoteItem = ({ note }) => {
 };
 
 export default NoteItem;
-// not seeing note in UI yes need to add create note model
