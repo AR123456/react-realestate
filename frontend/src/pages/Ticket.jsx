@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Modal from "react-modal;";
+import Modal from "react-modal";
 import { FaPlus } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { getTicket, closeTicket } from "../features/tickets/ticketsSlice";
@@ -90,6 +90,13 @@ const Ticket = () => {
             Add Note
           </button>
         )}
+        {/* The modal */}
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Add Note"
+        ></Modal>
         {notes.map((note) => (
           <NoteItem key={note._id} note={note} />
         ))}
