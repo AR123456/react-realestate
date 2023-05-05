@@ -86,8 +86,7 @@ const Ticket = () => {
         </header>
         {ticket.status !== "closed" && (
           <button onClick={openModal} className="btn">
-            <FaPlus />
-            Add Note
+            <FaPlus /> Add Note
           </button>
         )}
         {/* The modal */}
@@ -96,7 +95,12 @@ const Ticket = () => {
           onRequestClose={closeModal}
           style={customStyles}
           contentLabel="Add Note"
-        ></Modal>
+        >
+          <h2>Add Note</h2>
+          <button className="btn-close" onClick={closeModal}>
+            X
+          </button>
+        </Modal>
         {notes.map((note) => (
           <NoteItem key={note._id} note={note} />
         ))}
