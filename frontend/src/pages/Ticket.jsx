@@ -57,10 +57,11 @@ const Ticket = () => {
     toast.success("Ticket Closed");
     navigate("/tickets");
   };
-  //Create note on submng
+  //Create note on submit
   const onNoteSubmit = (e) => {
     e.preventDefault();
     // dispatch(createNote({noteText,ticketId}))
+    console.log("submitted");
     closeModal();
   };
   // open close Modal
