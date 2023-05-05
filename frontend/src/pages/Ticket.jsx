@@ -51,6 +51,12 @@ const Ticket = () => {
     toast.success("Ticket Closed");
     navigate("/tickets");
   };
+  //Create note on submng
+  const onNoteSubmit = (e) => {
+    e.preventDefault();
+    // dispatch(createNote({noteText,ticketId}))
+    closeModal();
+  };
   // open close Modal
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
@@ -100,6 +106,23 @@ const Ticket = () => {
           <button className="btn-close" onClick={closeModal}>
             X
           </button>
+          <form onSubmit={onNoteSubmit}>
+            <div className="form-group">
+              <textarea
+                name="noteText"
+                id="noteText"
+                className="form-control"
+                placeholder="Note text"
+                value={noteText}
+                onChange={(e) => setNoteText(e.target.value)}
+              ></textarea>
+            </div>
+            <div className="form-group">
+              <button className="btn" type="submit">
+                Submit
+              </button>
+            </div>
+          </form>
         </Modal>
         {notes.map((note) => (
           <NoteItem key={note._id} note={note} />
