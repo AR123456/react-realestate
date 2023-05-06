@@ -14,7 +14,7 @@ const { protect } = require("../middleware/authMiddleware");
 // Re - route into note router
 // bring in the noteRouter part of merg params
 const noteRouter = require("./noteRoutes");
-router.use("./:ticketId/notes", noteRouter);
+router.use("/:ticketId/notes", noteRouter);
 // router.route is just a different syntax using it can chain to route
 router.route("/").get(protect, getTickets).post(protect, createTicket);
 
