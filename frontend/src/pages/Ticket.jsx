@@ -60,8 +60,8 @@ const Ticket = () => {
   //Create note on submit
   const onNoteSubmit = (e) => {
     e.preventDefault();
-    // dispatch(createNote({noteText,ticketId}))
-    console.log("submitted");
+    dispatch(createNote({ noteText, ticketId }));
+
     closeModal();
   };
   // open close Modal
