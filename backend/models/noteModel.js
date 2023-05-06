@@ -15,7 +15,7 @@ const noteSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       // which collection - schema ?
-      ref: "ticket",
+      ref: "Ticket",
     },
     text: {
       type: String,
